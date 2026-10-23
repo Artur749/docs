@@ -51,7 +51,7 @@ This functionality is only available to users with the [isAdmin](/user-guide/get
   - **Value comparison** (filter predicate): `$[?(@.pull_request.draft==false)]` — matches if the field equals the specified value.
 
 :::warning Common JSONPath mistake
-The expression `$.pull_request[?(@.draft==false)]` uses a nested predicate inside the path and **never matches** GitHub payloads. Use a root-level filter expression instead: `$[?(@.pull_request.draft==false)]`.
+A nested predicate only matches when it filters an **array** field — for example, `$.pull_request.labels[?(@.name=='bug')]` matches pull requests that have a label named `bug`. Applying the same syntax to a non-array (object) field, such as `$.pull_request[?(@.draft==false)]`, **never matches**. For object fields, use a root-level filter expression instead: `$[?(@.pull_request.draft==false)]`.
 :::
 
 :::warning GitHub Webhook Secret required
